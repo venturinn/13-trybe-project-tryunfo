@@ -49,7 +49,7 @@ Card.propTypes = {
   cardAttr2: PropTypes.string.isRequired,
   cardAttr3: PropTypes.string.isRequired,
   cardImage: PropTypes.string.isRequired,
-  cardRare: PropTypes.string.isRequired,
+  cardRare: PropTypes.bool.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
 };
 
