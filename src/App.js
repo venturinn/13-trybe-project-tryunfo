@@ -3,6 +3,7 @@ import Form from './components/Form';
 import Card from './components/Card';
 
 let isSaveButtonDisabled = true;
+// let filteredCards = [];
 
 class App extends React.Component {
   constructor() {
@@ -11,6 +12,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.deleteCard = this.deleteCard.bind(this);
+    this.filterCard = this.filterCard.bind(this);
 
     this.state = {
       cardName: '',
@@ -23,6 +25,8 @@ class App extends React.Component {
       cardTrunfo: false,
       cardsSave: [],
       hasTrunfo: false,
+      activeFilter: false,
+      filteredCards: [],
     };
   }
 
@@ -96,6 +100,23 @@ class App extends React.Component {
     );
   }
 
+  filterCard(event) {
+    const { value } = event.target;
+    const { cardsSave } = this.state;
+
+    if (value !== '') {
+      this.setState({
+        activeFilter: true,
+        filteredCards: cardsSave.filter((card) => card.cardName.includes(value)),
+      });
+    } else {
+      this.setState({
+        activeFilter: false,
+        filteredCards: [],
+      });
+    }
+  }
+
   render() {
     const { cardName,
       cardDescription,
@@ -107,6 +128,8 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       cardsSave,
+      activeFilter,
+      filteredCards,
     } = this.state;
 
     const maxSumCardAttr = 210;
@@ -160,29 +183,61 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        <div>
+          <p>Filtro de Busca</p>
+          <input
+            type="text"
+            data-testid="name-filter"
+            onChange={ this.filterCard }
+            placeholder="Nome da carta"
+          />
+        </div>
 
-        {cardsSave.map((card) => (
-          <div key={ card.cardName }>
-            <Card
-              cardName={ card.cardName }
-              cardDescription={ card.cardDescription }
-              cardAttr1={ card.cardAttr1 }
-              cardAttr2={ card.cardAttr2 }
-              cardAttr3={ card.cardAttr3 }
-              cardImage={ card.cardImage }
-              cardRare={ card.cardRare }
-              cardTrunfo={ card.cardTrunfo }
-            />
-            <button
-              type="button"
-              name={ cardsSave.indexOf(card) }
-              onClick={ this.deleteCard }
-              data-testid="delete-button"
-            >
-              Excluir
-            </button>
-          </div>
-        ))}
+        { activeFilter === false
+          ? (cardsSave.map((card) => (
+            <div key={ card.cardName }>
+              <Card
+                cardName={ card.cardName }
+                cardDescription={ card.cardDescription }
+                cardAttr1={ card.cardAttr1 }
+                cardAttr2={ card.cardAttr2 }
+                cardAttr3={ card.cardAttr3 }
+                cardImage={ card.cardImage }
+                cardRare={ card.cardRare }
+                cardTrunfo={ card.cardTrunfo }
+              />
+              <button
+                type="button"
+                name={ cardsSave.indexOf(card) }
+                onClick={ this.deleteCard }
+                data-testid="delete-button"
+              >
+                Excluir
+              </button>
+            </div>
+          ))) : (
+            filteredCards.map((card) => (
+              <div key={ card.cardName }>
+                <Card
+                  cardName={ card.cardName }
+                  cardDescription={ card.cardDescription }
+                  cardAttr1={ card.cardAttr1 }
+                  cardAttr2={ card.cardAttr2 }
+                  cardAttr3={ card.cardAttr3 }
+                  cardImage={ card.cardImage }
+                  cardRare={ card.cardRare }
+                  cardTrunfo={ card.cardTrunfo }
+                />
+                <button
+                  type="button"
+                  name={ cardsSave.indexOf(card) }
+                  onClick={ this.deleteCard }
+                  data-testid="delete-button"
+                >
+                  Excluir
+                </button>
+              </div>
+            )))}
       </div>
     );
   }
