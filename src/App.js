@@ -10,6 +10,7 @@ class App extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
+    this.deleteCard = this.deleteCard.bind(this);
 
     this.state = {
       cardName: '',
@@ -78,6 +79,23 @@ class App extends React.Component {
     }
   }
 
+  deleteCard(event) {
+    const { name } = event.target;
+    const { cardsSave } = this.state;
+
+    // Se um card Super Trunfo for removido, o state é atualizado com a informação de que não mais existe uma carta Super Trunfo
+    if (cardsSave[name].cardTrunfo === true) {
+      this.setState({
+        hasTrunfo: false,
+      });
+    }
+
+    // No array de cards salvos, remove apenas o card com o index correspondente ao botão, pois o 'name' do botão é sempre igual ao index do array
+    this.setState(
+      cardsSave.splice(name, 1),
+    );
+  }
+
   render() {
     const { cardName,
       cardDescription,
@@ -143,18 +161,28 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
         />
 
-        {cardsSave.map((card) => (<Card
-          key={ card.cardName }
-          cardName={ card.cardName }
-          cardDescription={ card.cardDescription }
-          cardAttr1={ card.cardAttr1 }
-          cardAttr2={ card.cardAttr2 }
-          cardAttr3={ card.cardAttr3 }
-          cardImage={ card.cardImage }
-          cardRare={ card.cardRare }
-          cardTrunfo={ card.cardTrunfo }
-        />))}
-
+        {cardsSave.map((card) => (
+          <div key={ card.cardName }>
+            <Card
+              cardName={ card.cardName }
+              cardDescription={ card.cardDescription }
+              cardAttr1={ card.cardAttr1 }
+              cardAttr2={ card.cardAttr2 }
+              cardAttr3={ card.cardAttr3 }
+              cardImage={ card.cardImage }
+              cardRare={ card.cardRare }
+              cardTrunfo={ card.cardTrunfo }
+            />
+            <button
+              type="button"
+              name={ cardsSave.indexOf(card) }
+              onClick={ this.deleteCard }
+              data-testid="delete-button"
+            >
+              Excluir
+            </button>
+          </div>
+        ))}
       </div>
     );
   }
