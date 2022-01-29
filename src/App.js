@@ -2,6 +2,8 @@ import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
 
+let isSaveButtonDisabled = true;
+
 class App extends React.Component {
   constructor() {
     super();
@@ -15,7 +17,7 @@ class App extends React.Component {
       cardAttr2: '',
       cardAttr3: '',
       cardImage: '',
-      cardRare: true,
+      cardRare: '',
       cardTrunfo: false,
     };
   }
@@ -40,6 +42,30 @@ class App extends React.Component {
       cardTrunfo,
     } = this.state;
 
+    const maxSumCardAttr = 210;
+    const maxCardAttr = 90;
+
+    const cardAttr1Number = parseInt(cardAttr1, 10);
+    const cardAttr2Number = parseInt(cardAttr2, 10);
+    const cardAttr3Number = parseInt(cardAttr3, 10);
+
+    if (cardName !== ''
+    && cardDescription !== ''
+    && cardImage !== ''
+    && cardRare !== ''
+    && (cardAttr1Number + cardAttr2Number + cardAttr3Number) <= maxSumCardAttr
+    && cardAttr1Number >= 0
+    && cardAttr1Number <= maxCardAttr
+    && cardAttr2Number >= 0
+    && cardAttr2Number <= maxCardAttr
+    && cardAttr3Number >= 0
+    && cardAttr3Number <= maxCardAttr
+    ) {
+      isSaveButtonDisabled = false;
+    } else {
+      isSaveButtonDisabled = true;
+    }
+
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -53,6 +79,7 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
+          isSaveButtonDisabled={ isSaveButtonDisabled }
         />
         <Card
           cardName={ cardName }
