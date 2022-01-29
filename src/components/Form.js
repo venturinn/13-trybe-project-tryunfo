@@ -2,9 +2,18 @@ import React from 'react';
 
 class Form extends React.Component {
   render() {
-    const { cardName, cardDescription, cardAttr1, cardAttr2,
-      cardAttr3, cardImage, cardRare, cardTrunfo, /* hasTrunfo, */
-      onInputChange, onSaveButtonClick, isSaveButtonDisabled } = this.props;
+    const { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+      /* hasTrunfo, */
+      onInputChange,
+      onSaveButtonClick,
+      isSaveButtonDisabled } = this.props;
 
     return (
       <form>
@@ -103,5 +112,21 @@ class Form extends React.Component {
     );
   }
 }
+
+Form.propTypes = {
+  cardName: PropTypes.string.isRequired,
+  cardDescription: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.string.isRequired,
+  cardAttr2: PropTypes.string.isRequired,
+  cardAttr3: PropTypes.string.isRequired,
+  cardImage: PropTypes.string.isRequired,
+  cardRare: PropTypes.string.isRequired,
+  cardTrunfo: PropTypes.bool.isRequired,
+  /* hasTrunfo: PropTypes.bool.isRequired, */
+  isSaveButtonDisabled: PropTypes.bool.isRequired,
+  onInputChange: PropTypes.function.isRequired,
+  onSaveButtonClick: PropTypes.function.isRequired,
+
+};
 
 export default Form;
