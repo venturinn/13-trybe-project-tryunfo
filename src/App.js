@@ -21,6 +21,7 @@ class App extends React.Component {
       cardRare: 'nomal',
       cardTrunfo: false,
       cardSave: [],
+      hasTrunfo: false,
     };
   }
 
@@ -67,6 +68,13 @@ class App extends React.Component {
       cardImage: '',
       cardRare: 'normal',
     });
+
+    // Verifica se a carta adicionada é uma Super Trunfo
+    if (cardTrunfo === true) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    }
   }
 
   render() {
@@ -78,6 +86,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
+      hasTrunfo,
     } = this.state;
 
     const maxSumCardAttr = 210;
@@ -119,6 +128,7 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onSaveButtonClick={ this.onSaveButtonClick }
+          hasTrunfo={ hasTrunfo }
         />
         <Card
           cardName={ cardName }
