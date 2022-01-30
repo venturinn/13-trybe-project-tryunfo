@@ -3,7 +3,6 @@ import Form from './components/Form';
 import Card from './components/Card';
 
 let isSaveButtonDisabled = true;
-// let filteredCards = [];
 
 class App extends React.Component {
   constructor() {
@@ -13,6 +12,7 @@ class App extends React.Component {
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.deleteCard = this.deleteCard.bind(this);
     this.filterCard = this.filterCard.bind(this);
+    this.rareFilter = this.rareFilter.bind(this);
 
     this.state = {
       cardName: '',
@@ -21,11 +21,10 @@ class App extends React.Component {
       cardAttr2: '',
       cardAttr3: '',
       cardImage: '',
-      cardRare: 'nomal',
+      cardRare: 'normal',
       cardTrunfo: false,
       cardsSave: [],
       hasTrunfo: false,
-      activeFilter: false,
       filteredCards: [],
     };
   }
@@ -81,6 +80,11 @@ class App extends React.Component {
         hasTrunfo: true,
       });
     }
+
+    // Atualiza o state que é renderizado na página (filteredCards)
+    this.setState({
+      filteredCards: cardsSave,
+    });
   }
 
   deleteCard(event) {
@@ -106,13 +110,34 @@ class App extends React.Component {
 
     if (value !== '') {
       this.setState({
-        activeFilter: true,
         filteredCards: cardsSave.filter((card) => card.cardName.includes(value)),
       });
     } else {
       this.setState({
-        activeFilter: false,
-        filteredCards: [],
+        filteredCards: cardsSave,
+      });
+    }
+  }
+
+  rareFilter(event) {
+    const { value } = event.target;
+    const { cardsSave } = this.state;
+
+    if (value === 'normal') {
+      this.setState({
+        filteredCards: cardsSave.filter((card) => card.cardRare === 'normal'),
+      });
+    } else if (value === 'raro') {
+      this.setState({
+        filteredCards: cardsSave.filter((card) => card.cardRare === 'raro'),
+      });
+    } else if (value === 'muito raro') {
+      this.setState({
+        filteredCards: cardsSave.filter((card) => card.cardRare === 'muito raro'),
+      });
+    } else {
+      this.setState({
+        filteredCards: cardsSave,
       });
     }
   }
@@ -128,7 +153,6 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       cardsSave,
-      activeFilter,
       filteredCards,
     } = this.state;
 
@@ -191,10 +215,23 @@ class App extends React.Component {
             onChange={ this.filterCard }
             placeholder="Nome da carta"
           />
+          <label htmlFor="rare-filter">
+            <select
+              name="rare-filter"
+              data-testid="rare-filter"
+              onChange={ this.rareFilter }
+            >
+              <option>todas</option>
+              <option>normal</option>
+              <option>raro</option>
+              <option>muito raro</option>
+            </select>
+          </label>
+
         </div>
 
-        { activeFilter === false
-          ? (cardsSave.map((card) => (
+        {
+          filteredCards.map((card) => (
             <div key={ card.cardName }>
               <Card
                 cardName={ card.cardName }
@@ -215,29 +252,8 @@ class App extends React.Component {
                 Excluir
               </button>
             </div>
-          ))) : (
-            filteredCards.map((card) => (
-              <div key={ card.cardName }>
-                <Card
-                  cardName={ card.cardName }
-                  cardDescription={ card.cardDescription }
-                  cardAttr1={ card.cardAttr1 }
-                  cardAttr2={ card.cardAttr2 }
-                  cardAttr3={ card.cardAttr3 }
-                  cardImage={ card.cardImage }
-                  cardRare={ card.cardRare }
-                  cardTrunfo={ card.cardTrunfo }
-                />
-                <button
-                  type="button"
-                  name={ cardsSave.indexOf(card) }
-                  onClick={ this.deleteCard }
-                  data-testid="delete-button"
-                >
-                  Excluir
-                </button>
-              </div>
-            )))}
+          ))
+        }
       </div>
     );
   }
