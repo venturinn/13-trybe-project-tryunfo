@@ -1,0 +1,51 @@
+form {
+  text-align: center;
+}
+
+button {
+  background-color: blue;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 7px 40px;
+}
+
+.name-input {
+  border: solid 2px black;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.description-input {
+  border: solid 2px black;
+  border-radius: 5px;
+  height: 50px;
+  margin-bottom: 20px;
+  width: 400px;
+}
+
+.attr1-input, .attr2-input, .attr3-input {
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-left: 30px;
+  width: 100px;
+
+}
+
+.image-input {
+  border: solid 2px black;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.rare-input {
+  border: solid 2px black;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.trunfo-input {
+  margin-bottom: 40px;
+}

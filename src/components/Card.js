@@ -13,16 +13,19 @@ class Card extends React.Component {
       cardTrunfo } = this.props;
 
     return (
-      <div>
+      <div className="card">
         <p data-testid="name-card">{cardName}</p>
         <img data-testid="image-card" src={ cardImage } alt={ cardName } />
-        <p data-testid="description-card">{cardDescription}</p>
-        <p data-testid="attr1-card">{cardAttr1}</p>
-        <p data-testid="attr2-card">{cardAttr2}</p>
-        <p data-testid="attr3-card">{cardAttr3}</p>
+        <p className="card-info" data-testid="description-card">{cardDescription}</p>
+        <div className="Attr-container">
+          <p data-testid="attr1-card">{(`Attr01  ➞ ${cardAttr1}`)}</p>
+          <p data-testid="attr2-card">{(`Attr02  ➞ ${cardAttr2}`)}</p>
+          <p data-testid="attr3-card">{(`Attr03  ➞ ${cardAttr3}`)}</p>
+        </div>
         <p data-testid="rare-card">{cardRare}</p>
         {
-          cardTrunfo === true && <p data-testid="trunfo-card">Super Trunfo</p>
+          cardTrunfo === true
+          && <p className="super-trunfo" data-testid="trunfo-card">Super Trunfo</p>
         }
       </div>
     );

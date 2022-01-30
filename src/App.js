@@ -1,4 +1,8 @@
 import React from 'react';
+import './App.css';
+import './components/Card.css';
+import './components/Form.css';
+import './components/SearchCards.css';
 import Form from './components/Form';
 import Card from './components/Card';
 import SearchCards from './components/SearchCards';
@@ -181,7 +185,6 @@ class App extends React.Component {
 
     const maxSumCardAttr = 210;
     const maxCardAttr = 90;
-
     const cardAttr1Number = parseInt(cardAttr1, 10);
     const cardAttr2Number = parseInt(cardAttr2, 10);
     const cardAttr3Number = parseInt(cardAttr3, 10);
@@ -202,46 +205,54 @@ class App extends React.Component {
     } else {
       isSaveButtonDisabled = true;
     }
-
     return (
       <div>
-        <h1>Tryunfo</h1>
-        <Form
-          onInputChange={ this.handleChange }
-          cardName={ cardName }
-          cardDescription={ cardDescription }
-          cardAttr1={ cardAttr1 }
-          cardAttr2={ cardAttr2 }
-          cardAttr3={ cardAttr3 }
-          cardImage={ cardImage }
-          cardRare={ cardRare }
-          cardTrunfo={ cardTrunfo }
-          isSaveButtonDisabled={ isSaveButtonDisabled }
-          onSaveButtonClick={ this.onSaveButtonClick }
-          hasTrunfo={ hasTrunfo }
-        />
-        <Card
-          cardName={ cardName }
-          cardDescription={ cardDescription }
-          cardAttr1={ cardAttr1 }
-          cardAttr2={ cardAttr2 }
-          cardAttr3={ cardAttr3 }
-          cardImage={ cardImage }
-          cardRare={ cardRare }
-          cardTrunfo={ cardTrunfo }
-        />
-        <SearchCards
-          filterCard={ this.filterCard }
-          filterDisabled={ filterDisabled }
-          rareFilter={ this.rareFilter }
-          trunfoFilter={ this.trunfoFilter }
-          filteredCards={ filteredCards }
-          deleteCard={ this.deleteCard }
-          cardsSave={ cardsSave }
-        />
+        <h1>Tryunfo Project - Venturin</h1>
+        <div>
+          <div className="fist-page">
+            <div className="new-card">
+              <p className="add-card">Adicionar Nova Carta:</p>
+              <Form
+                onInputChange={ this.handleChange }
+                cardName={ cardName }
+                cardDescription={ cardDescription }
+                cardAttr1={ cardAttr1 }
+                cardAttr2={ cardAttr2 }
+                cardAttr3={ cardAttr3 }
+                cardImage={ cardImage }
+                cardRare={ cardRare }
+                cardTrunfo={ cardTrunfo }
+                isSaveButtonDisabled={ isSaveButtonDisabled }
+                onSaveButtonClick={ this.onSaveButtonClick }
+                hasTrunfo={ hasTrunfo }
+              />
+            </div>
+            <div className="preview-container">
+              <p>Pré-Visualização:</p>
+              <Card
+                cardName={ cardName }
+                cardDescription={ cardDescription }
+                cardAttr1={ cardAttr1 }
+                cardAttr2={ cardAttr2 }
+                cardAttr3={ cardAttr3 }
+                cardImage={ cardImage }
+                cardRare={ cardRare }
+                cardTrunfo={ cardTrunfo }
+              />
+            </div>
+          </div>
+          <SearchCards
+            filterCard={ this.filterCard }
+            filterDisabled={ filterDisabled }
+            rareFilter={ this.rareFilter }
+            trunfoFilter={ this.trunfoFilter }
+            filteredCards={ filteredCards }
+            deleteCard={ this.deleteCard }
+            cardsSave={ cardsSave }
+          />
+        </div>
       </div>
     );
   }
 }
-
 export default App;

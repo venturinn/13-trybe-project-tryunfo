@@ -1,0 +1,44 @@
+body {
+  background-color: rgb(2, 24, 13);
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+h1 {
+  font-family: monospace;
+  text-align: center;
+}
+
+.fist-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 1366px;
+
+}
+
+.new-card {
+  background-color: rgb(22, 97, 51);
+  border: black solid 1px;
+  color: white;
+  height: 579px;
+  width: 683px;
+
+}
+
+.preview-container {
+  background-color: rgb(6, 41, 6);
+  border: black solid 1px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 579px;
+  text-align: center;
+  width: 683px;
+}
+
+.add-card {
+  font-size: 20px;
+  font-weight: 900;
+}

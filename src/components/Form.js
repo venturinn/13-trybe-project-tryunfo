@@ -20,10 +20,11 @@ class Form extends React.Component {
 
     return (
       <form>
+        <p>Nome:</p>
         <label htmlFor="name-input">
           <input
             name="cardName"
-            id="name-input"
+            className="name-input"
             type="text"
             data-testid="name-input"
             value={ cardName }
@@ -31,10 +32,11 @@ class Form extends React.Component {
           />
         </label>
         <br />
+        <p>Descrição:</p>
         <label htmlFor="description-input">
           <input
             name="cardDescription"
-            id="description-input"
+            className="description-input"
             type="textarea"
             data-testid="description-input"
             value={ cardDescription }
@@ -42,10 +44,11 @@ class Form extends React.Component {
           />
         </label>
         <br />
+        <span>Attr01:</span>
         <label htmlFor="attr1-input">
           <input
             name="cardAttr1"
-            id="attr1-input"
+            className="attr1-input"
             type="number"
             data-testid="attr1-input"
             value={ cardAttr1 }
@@ -53,10 +56,11 @@ class Form extends React.Component {
           />
         </label>
         <br />
+        <span>Attr02:</span>
         <label htmlFor="attr2-input">
           <input
             name="cardAttr2"
-            id="attr2-input"
+            className="attr2-input"
             type="number"
             data-testid="attr2-input"
             value={ cardAttr2 }
@@ -64,10 +68,11 @@ class Form extends React.Component {
           />
         </label>
         <br />
+        <span>Attr03:</span>
         <label htmlFor="attr3-input">
           <input
             name="cardAttr3"
-            id="attr3-input"
+            className="attr3-input"
             type="number"
             data-testid="attr3-input"
             value={ cardAttr3 }
@@ -75,10 +80,11 @@ class Form extends React.Component {
           />
         </label>
         <br />
+        <p>Imagem URL:</p>
         <label htmlFor="image-input">
           <input
             name="cardImage"
-            id="image-input"
+            className="image-input"
             type="text"
             data-testid="image-input"
             value={ cardImage }
@@ -86,10 +92,11 @@ class Form extends React.Component {
           />
         </label>
         <br />
+        <span>Raridade:</span>
         <label htmlFor="rare-input">
           <select
             name="cardRare"
-            id="rare-input"
+            className="rare-input"
             data-testid="rare-input"
             value={ cardRare }
             onChange={ onInputChange }
@@ -106,16 +113,19 @@ class Form extends React.Component {
             Você já tem um Super Trunfo em seu baralho
           </p>
         ) : (
-          <label htmlFor="trunfo-input">
-            <input
-              name="cardTrunfo"
-              id="trunfo-input"
-              type="checkbox"
-              data-testid="trunfo-input"
-              checked={ cardTrunfo }
-              onChange={ onInputChange }
-            />
-          </label>
+          <div>
+            <label htmlFor="trunfo-input">
+              <input
+                name="cardTrunfo"
+                className="trunfo-input"
+                type="checkbox"
+                data-testid="trunfo-input"
+                checked={ cardTrunfo }
+                onChange={ onInputChange }
+              />
+            </label>
+            <span>Super Trunfo</span>
+          </div>
         )}
         <br />
         <button

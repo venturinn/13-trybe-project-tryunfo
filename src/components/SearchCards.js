@@ -15,11 +15,13 @@ class SearchCards extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <div className="all-cards">
         <div>
-          <p>Filtros de Busca</p>
+          <p className="all-cards-title">Todas as cartas</p>
+          <p>Filtros de Busca:</p>
           <input
             type="text"
+            className="name-filter"
             data-testid="name-filter"
             onChange={ filterCard }
             placeholder="Nome da carta"
@@ -28,7 +30,9 @@ class SearchCards extends React.Component {
           <label htmlFor="rare-filter">
             <select
               name="rare-filter"
+              className="rare-filter"
               data-testid="rare-filter"
+              placeholder="Raridade"
               onChange={ rareFilter }
               disabled={ filterDisabled }
             >
@@ -38,18 +42,21 @@ class SearchCards extends React.Component {
               <option>muito raro</option>
             </select>
           </label>
+          <br />
           <label htmlFor="trunfo-filter">
             <input
               name="trunfo-filter"
               type="checkbox"
+              className="trunfo-filter"
               data-testid="trunfo-filter"
               onChange={ trunfoFilter }
             />
           </label>
+          <span>Super Trunfo</span>
         </div>
-        <div>
+        <div className="cards-view">
           { filteredCards.map((card) => (
-            <div key={ card.cardName }>
+            <div className="card-view" key={ card.cardName }>
               <Card
                 cardName={ card.cardName }
                 cardDescription={ card.cardDescription }
@@ -62,6 +69,7 @@ class SearchCards extends React.Component {
               />
               <button
                 type="button"
+                className="delete-button"
                 name={ cardsSave.indexOf(card) }
                 onClick={ deleteCard }
                 data-testid="delete-button"
