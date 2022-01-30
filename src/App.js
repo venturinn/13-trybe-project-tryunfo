@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import SearchCards from './components/SearchCards';
 
 let isSaveButtonDisabled = true;
 
@@ -125,6 +126,8 @@ class App extends React.Component {
     const { value } = event.target;
     const { cardsSave } = this.state;
 
+    const muitoRaro = 'muito raro'; // Constante definida para evitar erro ESLint
+
     if (value === 'normal') {
       this.setState({
         filteredCards: cardsSave.filter((card) => card.cardRare === 'normal'),
@@ -133,9 +136,9 @@ class App extends React.Component {
       this.setState({
         filteredCards: cardsSave.filter((card) => card.cardRare === 'raro'),
       });
-    } else if (value === 'muito raro') {
+    } else if (value === muitoRaro) {
       this.setState({
-        filteredCards: cardsSave.filter((card) => card.cardRare === 'muito raro'),
+        filteredCards: cardsSave.filter((card) => card.cardRare === muitoRaro),
       });
     } else {
       this.setState({
@@ -227,59 +230,15 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
-        <div>
-          <p>Filtros de Busca</p>
-          <input
-            type="text"
-            data-testid="name-filter"
-            onChange={ this.filterCard }
-            placeholder="Nome da carta"
-            disabled={ filterDisabled }
-          />
-          <label htmlFor="rare-filter">
-            <select
-              name="rare-filter"
-              data-testid="rare-filter"
-              onChange={ this.rareFilter }
-              disabled={ filterDisabled }
-            >
-              <option>todas</option>
-              <option>normal</option>
-              <option>raro</option>
-              <option>muito raro</option>
-            </select>
-          </label>
-          <label htmlFor="trunfo-filter">
-            <input
-              name="trunfo-filter"
-              type="checkbox"
-              data-testid="trunfo-filter"
-              onChange={ this.trunfoFilter }
-            />
-          </label>
-        </div>
-        {filteredCards.map((card) => (
-          <div key={ card.cardName }>
-            <Card
-              cardName={ card.cardName }
-              cardDescription={ card.cardDescription }
-              cardAttr1={ card.cardAttr1 }
-              cardAttr2={ card.cardAttr2 }
-              cardAttr3={ card.cardAttr3 }
-              cardImage={ card.cardImage }
-              cardRare={ card.cardRare }
-              cardTrunfo={ card.cardTrunfo }
-            />
-            <button
-              type="button"
-              name={ cardsSave.indexOf(card) }
-              onClick={ this.deleteCard }
-              data-testid="delete-button"
-            >
-              Excluir
-            </button>
-          </div>
-        ))}
+        <SearchCards
+          filterCard={ this.filterCard }
+          filterDisabled={ filterDisabled }
+          rareFilter={ this.rareFilter }
+          trunfoFilter={ this.trunfoFilter }
+          filteredCards={ filteredCards }
+          deleteCard={ this.deleteCard }
+          cardsSave={ cardsSave }
+        />
       </div>
     );
   }
