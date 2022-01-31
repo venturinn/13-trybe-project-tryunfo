@@ -3,6 +3,7 @@ import './App.css';
 import './components/Card.css';
 import './components/Form.css';
 import './components/SearchCards.css';
+import './components/Play.css';
 import Form from './components/Form';
 import Card from './components/Card';
 import SearchCards from './components/SearchCards';

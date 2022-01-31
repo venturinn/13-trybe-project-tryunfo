@@ -15,19 +15,9 @@ class Play extends React.Component {
     } = this.props;
 
     return (
-      <div className="cards-view">
+      <div className="cards-play-view">
         <p>Vamos Jogar!</p>
-        <div className="selected-card" key={ selectCard.cardName }>
-          <Card
-            cardName={ selectCard.cardName }
-            cardDescription={ selectCard.cardDescription }
-            cardAttr1={ selectCard.cardAttr1 }
-            cardAttr2={ selectCard.cardAttr2 }
-            cardAttr3={ selectCard.cardAttr3 }
-            cardImage={ selectCard.cardImage }
-            cardRare={ selectCard.cardRare }
-            cardTrunfo={ selectCard.cardTrunfo }
-          />
+        <div className="buttons">
           <button
             type="button"
             className=" shuffle-button"
@@ -46,7 +36,21 @@ class Play extends React.Component {
           >
             Próxima carta...
           </button>
-          <p>{`Cartas Restantes: ${counter}`}</p>
+        </div>
+        <p>{`Cartas Restantes: ${counter}`}</p>
+
+        <div className="selected-card" key={ selectCard.cardName }>
+          <Card
+            cardName={ selectCard.cardName }
+            cardDescription={ selectCard.cardDescription }
+            cardAttr1={ selectCard.cardAttr1 }
+            cardAttr2={ selectCard.cardAttr2 }
+            cardAttr3={ selectCard.cardAttr3 }
+            cardImage={ selectCard.cardImage }
+            cardRare={ selectCard.cardRare }
+            cardTrunfo={ selectCard.cardTrunfo }
+          />
+
         </div>
       </div>
     );
@@ -54,14 +58,38 @@ class Play extends React.Component {
 }
 
 Play.propTypes = {
-  nextCard: PropTypes.object.isRequired,
+  nextCard: PropTypes.func.isRequired,
   shuffle: PropTypes.func.isRequired,
-  cardAttr1: PropTypes.string.isRequired,
-  cardAttr2: PropTypes.string.isRequired,
-  cardAttr3: PropTypes.string.isRequired,
+  nextCardDisabled: PropTypes.bool.isRequired,
+  shuffleDisabled: PropTypes.bool.isRequired,
+  nextCardColor: PropTypes.string.isRequired,
   cardImage: PropTypes.string.isRequired,
-  cardRare: PropTypes.string.isRequired,
-  cardTrunfo: PropTypes.bool.isRequired,
+  shuffleColor: PropTypes.string.isRequired,
+  counter: PropTypes.number.isRequired,
+  selectCard: PropTypes.shape({
+    cardName: PropTypes.string,
+    cardDescription: PropTypes.string,
+    cardAttr1: PropTypes.string,
+    cardAttr2: PropTypes.string,
+    cardAttr3: PropTypes.string,
+    cardImage: PropTypes.string,
+    cardRare: PropTypes.bool,
+    cardTrunfo: PropTypes.bool,
+  }),
+};
+
+Play.defaultProps = {
+  selectCard: {
+    cardName: '',
+    cardDescription: '',
+    cardAttr1: '',
+    cardAttr2: '',
+    cardAttr3: '',
+    cardImage: '',
+    cardRare: false,
+    cardTrunfo: false,
+  },
+
 };
 
 export default Play;
