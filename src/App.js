@@ -8,6 +8,7 @@ import Form from './components/Form';
 import Card from './components/Card';
 import SearchCards from './components/SearchCards';
 import Play from './components/Play';
+import initialState from './constants/initialState';
 
 let isSaveButtonDisabled = true;
 
@@ -22,33 +23,13 @@ class App extends React.Component {
     this.trunfoFilter = this.trunfoFilter.bind(this);
     this.nextCard = this.nextCard.bind(this);
     this.shuffle = this.shuffle.bind(this);
-    this.state = { cardName: '',
-      cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
-      cardImage: '',
-      cardRare: 'normal',
-      cardTrunfo: false,
-      cardsSave: [],
-      hasTrunfo: false,
-      filteredCards: [],
-      filterDisabled: false,
-      selectedCard: {},
-      shuffleCards: [],
-      shuffleDisabled: false,
-      nextCardDisabled: true,
-      indexSelectedCard: 0,
-      nextCardColor: 'gray',
-      shuffleColor: 'blue',
-      counter: 0,
-    };
+
+    this.state = { ...initialState }; // Recurso adotado observando o PR do meu colega Rafael França
   }
 
   handleChange({ target }) {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-
     this.setState({
       [name]: value,
     });
@@ -69,8 +50,7 @@ class App extends React.Component {
         cardTrunfo },
     );
 
-    this.setState({
-      cardName: '',
+    this.setState({ cardName: '',
       cardDescription: '',
       cardAttr1: '0',
       cardAttr2: '0',
@@ -86,7 +66,6 @@ class App extends React.Component {
         hasTrunfo: true,
       });
     }
-
     // Atualiza o state que é renderizado na página (filteredCards)
     this.setState({
       filteredCards: cardsSave,
@@ -96,14 +75,12 @@ class App extends React.Component {
   deleteCard(event) {
     const { name } = event.target;
     const { cardsSave } = this.state;
-
     // Se um card Super Trunfo for removido, o state é atualizado com a informação de que não mais existe uma carta Super Trunfo
     if (cardsSave[name].cardTrunfo === true) {
       this.setState({
         hasTrunfo: false,
       });
     }
-
     // No array de cards salvos, remove apenas o card com o index correspondente ao botão, pois o 'name' do botão é sempre igual ao index do array
     this.setState(
       cardsSave.splice(name, 1),
@@ -113,7 +90,6 @@ class App extends React.Component {
   filterCard(event) {
     const { value } = event.target;
     const { cardsSave } = this.state;
-
     if (value !== '') {
       this.setState({
         filteredCards: cardsSave.filter((card) => card.cardName.includes(value)),
@@ -128,7 +104,6 @@ class App extends React.Component {
   rareFilter(event) {
     const { value } = event.target;
     const { cardsSave } = this.state;
-
     const muitoRaro = 'muito raro'; // Constante definida para evitar erro ESLint
 
     if (value === 'normal') {
@@ -153,7 +128,6 @@ class App extends React.Component {
   trunfoFilter({ target }) {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const { cardsSave } = this.state;
-
     if (value === true) {
       this.setState({
         filteredCards: cardsSave.filter((card) => card.cardTrunfo === true),
@@ -169,7 +143,6 @@ class App extends React.Component {
 
   nextCard() {
     const { indexSelectedCard, shuffleCards } = this.state;
-
     this.setState((estadoAnterior) => ({
       indexSelectedCard: estadoAnterior.indexSelectedCard + 1,
       counter: estadoAnterior.counter - 1,
@@ -194,13 +167,11 @@ class App extends React.Component {
   shuffle() {
     const { cardsSave } = this.state;
     const shuffleArray = 0.5;
-
     if (cardsSave.length !== 0) {
       this.setState({
       // ref.: https://flaviocopes.com/how-to-shuffle-array-javascript/
         shuffleCards: cardsSave.sort(() => Math.random() - shuffleArray),
       });
-
       this.setState((estadoAnterior) => ({
         selectedCard: estadoAnterior.shuffleCards[0],
         counter: estadoAnterior.shuffleCards.length - 1,
@@ -215,9 +186,7 @@ class App extends React.Component {
 
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
-      cardRare, cardTrunfo, hasTrunfo, cardsSave, filteredCards, filterDisabled,
-      selectedCard, shuffleDisabled, nextCardDisabled, nextCardColor,
-      shuffleColor, counter } = this.state;
+      cardRare } = this.state;
 
     const maxSumCardAttr = 210;
     const maxCardAttr = 90;
@@ -249,53 +218,29 @@ class App extends React.Component {
             <div className="new-card">
               <p className="add-card">Adicionar Nova Carta:</p>
               <Form
+                { ...this.state }
                 onInputChange={ this.handleChange }
-                cardName={ cardName }
-                cardDescription={ cardDescription }
-                cardAttr1={ cardAttr1 }
-                cardAttr2={ cardAttr2 }
-                cardAttr3={ cardAttr3 }
-                cardImage={ cardImage }
-                cardRare={ cardRare }
-                cardTrunfo={ cardTrunfo }
-                isSaveButtonDisabled={ isSaveButtonDisabled }
                 onSaveButtonClick={ this.onSaveButtonClick }
-                hasTrunfo={ hasTrunfo }
+                isSaveButtonDisabled={ isSaveButtonDisabled }
               />
             </div>
             <div className="preview-container">
               <p>Pré-Visualização:</p>
-              <Card
-                cardName={ cardName }
-                cardDescription={ cardDescription }
-                cardAttr1={ cardAttr1 }
-                cardAttr2={ cardAttr2 }
-                cardAttr3={ cardAttr3 }
-                cardImage={ cardImage }
-                cardRare={ cardRare }
-                cardTrunfo={ cardTrunfo }
-              />
+              <Card { ...this.state } />
             </div>
           </div>
           <SearchCards
+            { ...this.state }
             filterCard={ this.filterCard }
-            filterDisabled={ filterDisabled }
             rareFilter={ this.rareFilter }
             trunfoFilter={ this.trunfoFilter }
-            filteredCards={ filteredCards }
             deleteCard={ this.deleteCard }
-            cardsSave={ cardsSave }
           />
           <hr />
           <Play
+            { ...this.state }
             nextCard={ this.nextCard }
             shuffle={ this.shuffle }
-            selectCard={ selectedCard }
-            shuffleDisabled={ shuffleDisabled }
-            nextCardDisabled={ nextCardDisabled }
-            nextCardColor={ nextCardColor }
-            shuffleColor={ shuffleColor }
-            counter={ counter }
           />
         </div>
       </div>

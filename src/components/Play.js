@@ -6,7 +6,7 @@ class Play extends React.Component {
   render() {
     const { nextCard,
       shuffle,
-      selectCard,
+      selectedCard,
       nextCardDisabled,
       shuffleDisabled,
       nextCardColor,
@@ -39,16 +39,16 @@ class Play extends React.Component {
         </div>
         <p>{`Cartas Restantes: ${counter}`}</p>
 
-        <div className="selected-card" key={ selectCard.cardName }>
+        <div className="selected-card" key={ selectedCard.cardName }>
           <Card
-            cardName={ selectCard.cardName }
-            cardDescription={ selectCard.cardDescription }
-            cardAttr1={ selectCard.cardAttr1 }
-            cardAttr2={ selectCard.cardAttr2 }
-            cardAttr3={ selectCard.cardAttr3 }
-            cardImage={ selectCard.cardImage }
-            cardRare={ selectCard.cardRare }
-            cardTrunfo={ selectCard.cardTrunfo }
+            cardName={ selectedCard.cardName }
+            cardDescription={ selectedCard.cardDescription }
+            cardAttr1={ selectedCard.cardAttr1 }
+            cardAttr2={ selectedCard.cardAttr2 }
+            cardAttr3={ selectedCard.cardAttr3 }
+            cardImage={ selectedCard.cardImage }
+            cardRare={ selectedCard.cardRare }
+            cardTrunfo={ selectedCard.cardTrunfo }
           />
 
         </div>
@@ -66,7 +66,7 @@ Play.propTypes = {
   cardImage: PropTypes.string.isRequired,
   shuffleColor: PropTypes.string.isRequired,
   counter: PropTypes.number.isRequired,
-  selectCard: PropTypes.shape({
+  selectedCard: PropTypes.shape({
     cardName: PropTypes.string,
     cardDescription: PropTypes.string,
     cardAttr1: PropTypes.string,
@@ -79,7 +79,7 @@ Play.propTypes = {
 };
 
 Play.defaultProps = {
-  selectCard: {
+  selectedCard: {
     cardName: '',
     cardDescription: '',
     cardAttr1: '',

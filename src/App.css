@@ -15,7 +15,6 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   width: 1366px;
-
 }
 
 .new-card {
@@ -24,7 +23,6 @@ h1 {
   color: white;
   height: 579px;
   width: 683px;
-
 }
 
 .preview-container {

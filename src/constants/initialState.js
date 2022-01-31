@@ -1,0 +1,23 @@
+const initialState = { cardName: '',
+  cardDescription: '',
+  cardAttr1: '',
+  cardAttr2: '',
+  cardAttr3: '',
+  cardImage: '',
+  cardRare: 'normal',
+  cardTrunfo: false,
+  cardsSave: [],
+  hasTrunfo: false,
+  filteredCards: [],
+  filterDisabled: false,
+  selectedCard: {},
+  shuffleCards: [],
+  shuffleDisabled: false,
+  nextCardDisabled: true,
+  indexSelectedCard: 0,
+  nextCardColor: 'gray',
+  shuffleColor: 'blue',
+  counter: 0,
+};
+
+export default initialState;
