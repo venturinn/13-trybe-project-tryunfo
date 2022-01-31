@@ -6,22 +6,22 @@ import './components/SearchCards.css';
 import Form from './components/Form';
 import Card from './components/Card';
 import SearchCards from './components/SearchCards';
+import Play from './components/Play';
 
 let isSaveButtonDisabled = true;
 
 class App extends React.Component {
   constructor() {
     super();
-
     this.handleChange = this.handleChange.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.deleteCard = this.deleteCard.bind(this);
     this.filterCard = this.filterCard.bind(this);
     this.rareFilter = this.rareFilter.bind(this);
     this.trunfoFilter = this.trunfoFilter.bind(this);
-
-    this.state = {
-      cardName: '',
+    this.nextCard = this.nextCard.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+    this.state = { cardName: '',
       cardDescription: '',
       cardAttr1: '',
       cardAttr2: '',
@@ -33,6 +33,14 @@ class App extends React.Component {
       hasTrunfo: false,
       filteredCards: [],
       filterDisabled: false,
+      selectedCard: {},
+      shuffleCards: [],
+      shuffleDisabled: false,
+      nextCardDisabled: true,
+      indexSelectedCard: 0,
+      nextCardColor: 'gray',
+      shuffleColor: 'blue',
+      counter: 0,
     };
   }
 
@@ -46,28 +54,18 @@ class App extends React.Component {
   }
 
   onSaveButtonClick() {
-    const { cardsSave,
-      cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-      cardTrunfo,
-    } = this.state;
+    const { cardsSave, cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
+      cardImage, cardRare, cardTrunfo } = this.state;
 
     cardsSave.push(
-      {
-        cardName,
+      { cardName,
         cardDescription,
         cardAttr1,
         cardAttr2,
         cardAttr3,
         cardImage,
         cardRare,
-        cardTrunfo,
-      },
+        cardTrunfo },
     );
 
     this.setState({
@@ -168,20 +166,57 @@ class App extends React.Component {
     }
   }
 
+  nextCard() {
+    const { indexSelectedCard, shuffleCards } = this.state;
+
+    this.setState((estadoAnterior) => ({
+      indexSelectedCard: estadoAnterior.indexSelectedCard + 1,
+      counter: estadoAnterior.counter - 1,
+    }));
+
+    // Verificar essa lógica: (indexSelectedCard +2). Recurso utilizado devido à forma assíncrona que o estado é atualizado.
+    if (shuffleCards.length <= (indexSelectedCard + 2)) {
+      this.setState((estadoAnterior) => ({
+        selectedCard: shuffleCards[estadoAnterior.indexSelectedCard],
+        shuffleDisabled: false,
+        nextCardDisabled: true,
+        nextCardColor: 'gray',
+        shuffleColor: 'blue',
+      }));
+    } else {
+      this.setState((estadoAnterior) => ({
+        selectedCard: shuffleCards[estadoAnterior.indexSelectedCard],
+      }));
+    }
+  }
+
+  shuffle() {
+    const { cardsSave } = this.state;
+    const shuffleArray = 0.5;
+
+    if (cardsSave.length !== 0) {
+      this.setState({
+      // ref.: https://flaviocopes.com/how-to-shuffle-array-javascript/
+        shuffleCards: cardsSave.sort(() => Math.random() - shuffleArray),
+      });
+
+      this.setState((estadoAnterior) => ({
+        selectedCard: estadoAnterior.shuffleCards[0],
+        counter: estadoAnterior.shuffleCards.length - 1,
+        shuffleDisabled: true,
+        nextCardDisabled: false,
+        indexSelectedCard: 0,
+        nextCardColor: 'blue',
+        shuffleColor: 'gray',
+      }));
+    }
+  }
+
   render() {
-    const { cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-      cardTrunfo,
-      hasTrunfo,
-      cardsSave,
-      filteredCards,
-      filterDisabled,
-    } = this.state;
+    const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
+      cardRare, cardTrunfo, hasTrunfo, cardsSave, filteredCards, filterDisabled,
+      selectedCard, shuffleDisabled, nextCardDisabled, nextCardColor,
+      shuffleColor, counter } = this.state;
 
     const maxSumCardAttr = 210;
     const maxCardAttr = 90;
@@ -249,6 +284,17 @@ class App extends React.Component {
             filteredCards={ filteredCards }
             deleteCard={ this.deleteCard }
             cardsSave={ cardsSave }
+          />
+          <hr />
+          <Play
+            nextCard={ this.nextCard }
+            shuffle={ this.shuffle }
+            selectCard={ selectedCard }
+            shuffleDisabled={ shuffleDisabled }
+            nextCardDisabled={ nextCardDisabled }
+            nextCardColor={ nextCardColor }
+            shuffleColor={ shuffleColor }
+            counter={ counter }
           />
         </div>
       </div>
